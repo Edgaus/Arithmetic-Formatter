@@ -1,51 +1,55 @@
-def add_time(start, duration, day = None):
+def add_time(start, duration, day=None):
 
-    days_of_the_week = ['sunday', 'monday', 'tuesday', 'wendesday', 'thursday', 'friday', 'saturday']
+  days_of_the_week = [
+    'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday',
+    'saturday'
+  ]
 
-    index_start = start.rfind(':') 
-    index_duration = duration.rfind((':'))
-    format_hour = start[-2:]
+  index_start = start.rfind(':')
+  index_duration = duration.rfind((':'))
+  format_hour = start[-2:]
 
-    hour_start = int(start[ : index_start])
-    minute_start = int(start[index_start+1 : -2])
+  hour_start = int(start[:index_start])
+  minute_start = int(start[index_start + 1:-2])
 
-    hour_duration = int(duration[ : index_duration])
-    minute_duration = int(duration[index_duration+1 : ])
+  hour_duration = int(duration[:index_duration])
+  minute_duration = int(duration[index_duration + 1:])
 
-    Minutes_of_the_day = hour_start*60 + minute_start
-    Minutes_to_add = hour_duration*60 + minute_duration
+  Minutes_of_the_day = hour_start * 60 + minute_start
+  Minutes_to_add = hour_duration * 60 + minute_duration
 
-    if format_hour == 'PM':
-        Minutes_of_the_day = Minutes_of_the_day +12*60
+  if format_hour == 'PM':
+    Minutes_of_the_day = Minutes_of_the_day + 12 * 60
 
-    Total_minutes = Minutes_of_the_day + Minutes_to_add
+  Total_minutes = Minutes_of_the_day + Minutes_to_add
 
-    Final_minutes, Final_hour, Final_day = Total_minutes%60, int(Total_minutes/60)%24, int(Total_minutes/(60*24))
+  Final_minutes, Final_hour, Final_day = Total_minutes % 60, int(
+    Total_minutes / 60) % 24, int(Total_minutes / (60 * 24))
 
-    if Final_minutes<10:
-        Final_minutes = '0' + str(Final_minutes)
-    else:
-        Final_minutes = str(Final_minutes)
+  if Final_minutes < 10:
+    Final_minutes = '0' + str(Final_minutes)
+  else:
+    Final_minutes = str(Final_minutes)
 
-    new_time = 'Returns: ' 
+  new_time = ''
 
-    if Final_hour>12:
-        new_time = new_time + str(Final_hour-12) + ':' + Final_minutes + ' PM'
-    else:
-        if Final_hour==0:
-            Final_hour=12
-        new_time = new_time + str(Final_hour) + ':' + Final_minutes + ' AM'
+  if Final_hour > 11:
+    if Final_hour == 12:
+      Final_hour = 24
+    new_time = new_time + str(Final_hour - 12) + ':' + Final_minutes + ' PM'
+  else:
+    if Final_hour == 0:
+      Final_hour = 12
+    new_time = new_time + str(Final_hour) + ':' + Final_minutes + ' AM'
 
-    if day is not None:
-        day_ini_index = (days_of_the_week.index(day.lower()) + Final_day)%7
-        new_time = new_time + ', ' + days_of_the_week[day_ini_index][0].upper() + days_of_the_week[day_ini_index][1:]
+  if day is not None:
+    day_ini_index = (days_of_the_week.index(day.lower()) + Final_day) % 7
+    new_time = new_time + ', ' + days_of_the_week[day_ini_index][0].upper(
+    ) + days_of_the_week[day_ini_index][1:]
 
+  if Final_day == 1:
+    new_time = new_time + ' (next day)'
+  elif Final_day > 1:
+    new_time = new_time + ' (' + str(Final_day) + ' days later)'
 
-
-    if Final_day == 1:
-        new_time = new_time + ' (next day)'
-    elif Final_day>1:
-            new_time = new_time + ' (' + str(Final_day) + ' days later)' 
-
-
-    return new_time
+  return new_time
