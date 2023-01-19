@@ -43,7 +43,8 @@ class Category:
     self.budget_category = budget_category
 
     if amount <= (self.get_balance()):
-      self.withdraw(amount, 'Transfer to {}'.format(budget_category.category))
+      name = str(budget_category.category)
+      self.withdraw(amount, 'Transfer to '+str.upper(name[0])+name[1:])
       budget_category.deposit(amount, 'Transfer from {}'.format(self.category))
       return True
     else:
@@ -74,7 +75,12 @@ class Category:
                     lineas += (3-len(decimal_number[0]))*" " + decimal_number[0] + "." + decimal_number[1]
 
             except:
+                number_str = number_str + ".00"
+                if len_number > 4:  
+                    number_str = number_str[:7]
+
                 lineas += (7-len(number_str))*" "+number_str
 
-    return lineas
+    lineas += '\n' 'Total: {}'.format(self.get_balance())
 
+    return lineas
