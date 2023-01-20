@@ -1,0 +1,73 @@
+import copy
+import random
+
+class Hat:
+
+    def __init__(self,**arguments):
+
+
+
+        self.dictionary = arguments
+        self.contents = []
+        self.num_balls = []
+        
+        for key in arguments:
+            self.contents += [str(key) for i in range(0, self.dictionary[key])  ]
+            self.num_balls.append( arguments[key]  )
+    
+    def draw(self, number):
+
+    
+        self.draw = []
+        if number > len(self.contents):
+            return self.contents
+        else:
+            for i in range(number):
+                remove_hat = random.randint(0, len(self.contents)-1)
+                self.draw.append(self.contents[remove_hat])
+                self.contents.pop(remove_hat)
+                
+        return self.draw       
+               
+
+
+
+
+        
+def experiment(hat, expected_balls, num_balls_drawn, num_experiments ):
+    
+    exito = 0
+
+    for i in range(num_experiments):
+
+        hat_copy = copy.deepcopy(hat)
+        lista_resultado = hat_copy.draw(num_balls_drawn)
+        
+      
+        total = []
+        for key in expected_balls:
+            total.append(      lista_resultado.count(key)  - expected_balls[key]   )
+            
+        
+        criterio = [ total[i] for i in range(len(total)) if total[i]>=0  ]
+        
+        if criterio==total:
+            exito +=1
+
+
+     
+    probabilidad = (exito/num_experiments) 
+    return probabilidad
+
+     
+hat = Hat(blue=3, red=2, green=6)
+probability = experiment(hat=hat,
+                  expected_balls={"blue":2,"green":1},
+                  num_balls_drawn=4,
+                  num_experiments=1000)
+
+
+
+
+
+print( probability )
