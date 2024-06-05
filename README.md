@@ -1,3 +1,2 @@
-# Arithmetic Formatter
-
-This is the boilerplate for the Arithmetic Formatter project. Instructions for building your project can be found at https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/arithmetic-formatter
+# Hi there!
+In this space, you will find the files necessary to obtain the certifications associated with freeCodeCamp. The folder groups the different works according to their respective credentials.
